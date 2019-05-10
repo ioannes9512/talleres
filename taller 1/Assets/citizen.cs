@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class citizen : MonoBehaviour
 {
-    public float moveX;
-    public float moveY;
+    
     // Start is called before the first frame update
+    /// <summary>
+    /// se crea un array con una lista de nombres 
+    /// luego se crean variables con un random.range que seran asignadas luego dentro del ciclo for
+    /// y en funcion de lo que le corresponda crea una cantidad x en el rango establecida una instancia de tipo zombie o aldeano y luego imprime por consola 
+    /// los mensajes estipulados en la actividad
+    /// y crea una instancia tipo zombie
+    /// </summary>
     void Start()
     {
-        string[] Nombrezombie =
-        {
-           "elulalia","socorro","jose","antonio","pepe","saul"
-        };
+        
+
 
         string[] nombrecitizen =
         {
@@ -25,14 +29,14 @@ public class citizen : MonoBehaviour
         for(int i = 0; i < asignar; i++)
         {
 
-            zombie zomb = new zombie(Nombrezombie[i], Random.Range(40, 98));
+            Zombie zomb = new Zombie();
             Debug.Log(zomb.stats());
 
         }
-        int asignar2 = UnityEngine.Random.Range(1, 6);
+        int asignar2 = UnityEngine.Random.Range(1, 15);
         for(int j = 0;j < asignar2; j++)
         {
-           spawncitizen civ = new spawncitizen(nombrecitizen[UnityEngine.Random.Range(0, 20)], UnityEngine.Random.Range(15, 100));
+            Ciudadano civ = new Ciudadano(nombrecitizen[UnityEngine.Random.Range(0, 20)], UnityEngine.Random.Range(15, 100));
             Debug.Log(civ.Stats());
         }
         Hero hero = new Hero();

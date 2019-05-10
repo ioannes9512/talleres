@@ -1,67 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// se crean 2 axis para dar moviento al heroe
+/// </summary>
 public class Control : MonoBehaviour
 {
-    Zombie zomboid;
-    Vector3 control;
-    Rigidbody body;
-    float velocidad = 8f;
-    void Start()
-    {
-        body = GetComponent<Rigidbody>();
-    }
-
-    
     void Update()
     {
-        float movx = Input.GetAxisRaw("Horizontal");
-        float movy = Input.GetAxisRaw("Vertical");
-        Direccion(movx, movy);
-        Girar();
-        
+        float MovX = Input.GetAxisRaw("Horizontal");
+        float MovY = Input.GetAxisRaw("Vertical");
+        transform.Translate(0f, 0f, MovY * 0.5f);
+        transform.Rotate(0f, MovX * 2f, 0);
 
 
 
     }
-    public void Direccion(float prh, float prv)
-    {
-        control.Set(prh, 0, prv);
-        control = control.normalized * Time.deltaTime * velocidad;
-        body.MovePosition(transform.position + control);
-    }
+    
 
-    public void Girar()
-    {
-        Ray targetdir = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit Hitpoint;
-
-        if(Physics.Raycast(targetdir, out Hitpoint))
-        {
-            Vector3 movetoreference = Hitpoint.point - transform.position;
-            movetoreference.y = 0f;
-
-            Quaternion Setnewrotation = Quaternion.LookRotation(movetoreference);
-            body.MoveRotation(Setnewrotation);
-
-        }
-    }
-
+    
+    /// <summary>
+    /// se genera una collision con 2 condicionales para iprimir por consola los datos del objeto con el que colisiona
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.GetComponent<Zombie>())
         {
             Zombie zombie = collision.collider.GetComponent<Zombie>();
-            Debug.Log(" Warrrrrr soy un zombie y quiero" + zombie.Getzombietats().partes);
+            Debug.Log(" Warrrrrr soy un zombie y quiero comer "+" "+ zombie.Getzombietats().partes);
 
         }
 
         if (collision.collider.GetComponent<Citizen>())
         {
             Citizen civitas = collision.collider.GetComponent<Citizen>();
-            Debug.Log("Hola soy:" + civitas.getcitizenstats().nombre + civitas.getcitizenstats().edad + "Años");
+            Debug.Log("Hola soy:" + civitas.getcitizenstats().nombre +"y tengo"+ civitas.getcitizenstats().edad + "Años");
         }
     }
 
